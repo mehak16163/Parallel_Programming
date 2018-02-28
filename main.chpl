@@ -1,79 +1,55 @@
 write("Hello, ");
 writeln("World!");
 
-// write and writeln can take a list of things to print.
-// Each thing is printed right next to the others, so include your spacing!
+
 writeln("There are ", 3, " commas (\",\") in this line of code");
 
-// Different output channels:
 stdout.writeln("This goes to standard output, just like plain writeln() does");
 stderr.writeln("This goes to standard error");
 
 
-// Variables don't have to be explicitly typed as long as
-// the compiler can figure out the type that it will hold.
-// 10 is an int, so myVar is implicitly an int
+
 var myVar = 10;
 myVar = -10;
 var mySecondVar = myVar;
-// var anError; would be a compile-time error.
-
-// We can (and should) explicitly type things.
 var myThirdVar: real;
 var myFourthVar: real = -1.234;
 myThirdVar = myFourthVar;
+var myInt: int = -1000; 
+var myUint: uint = 1234;
+var myReal: real = 9.876; 
+var myImag: imag = 5.0i;
+var myCplx: complex = 10 + 9i; 
+myCplx = myInt + myImag;
+var myBool: bool = false;
+var myStr: string = "Some string..."; 
+var singleQuoteStr = 'Another string...'; 
 
-// Types
+var my8Int: int(8) = 10; 
+var my64Real: real(64) = 1.516; 
 
-// There are a number of basic types.
-var myInt: int = -1000; // Signed ints
-var myUint: uint = 1234; // Unsigned ints
-var myReal: real = 9.876; // Floating point numbers
-var myImag: imag = 5.0i; // Imaginary numbers
-var myCplx: complex = 10 + 9i; // Complex numbers
-myCplx = myInt + myImag; // Another way to form complex numbers
-var myBool: bool = false; // Booleans
-var myStr: string = "Some string..."; // Strings
-var singleQuoteStr = 'Another string...'; // String literal with single quotes
-
-// Some types can have sizes.
-var my8Int: int(8) = 10; // 8 bit (one byte) sized int;
-var my64Real: real(64) = 1.516; // 64 bit (8 bytes) sized real
-
-// Typecasting.
 var intFromReal = myReal : int;
 var intFromReal2: int = myReal : int;
 
-// Type aliasing.
-type chroma = int;        // Type of a single hue
-type RGBColor = 3*chroma; // Type representing a full color
+type chroma = int;      
+type RGBColor = 3*chroma; 
 var black: RGBColor = (0,0,0);
 var white: RGBColor = (255, 255, 255);
 
-// Constants and Parameters
 
-// A const is a constant, and cannot be changed after set in runtime.
 const almostPi: real = 22.0/7.0;
 
-// A param is a constant whose value must be known statically at
-// compile-time.
+
 param compileTimeConst: int = 16;
 
-// The config modifier allows values to be set at the command line.
-// Set with --varCmdLineArg=Value or --varCmdLineArg Value at runtime.
+
 config var varCmdLineArg: int = -123;
 config const constCmdLineArg: int = 777;
 
-// config param can be set at compile-time.
-// Set with --set paramCmdLineArg=value at compile-time.
+
 config param paramCmdLineArg: bool = false;
 writeln(varCmdLineArg, ", ", constCmdLineArg, ", ", paramCmdLineArg);
 
-// References
-
-// ref operates much like a reference in C++. In Chapel, a ref cannot
-// be made to alias a variable other than the variable it is initialized with.
-// Here, refToActual refers to actual.
 var actual = 10;
 ref refToActual = actual; 
 writeln(actual, " == ", refToActual); // prints the same value
@@ -82,9 +58,7 @@ writeln(actual, " == ", refToActual); // prints the same value
 refToActual = 99999999; // modify what refToActual refers to (which is actual)
 writeln(actual, " == ", refToActual); // prints the same value
 
-// Operators
 
-// Math operators:
 var a: int, thisInt = 1234, thatInt = 5678;
 a = thisInt + thatInt;  // Addition
 a = thisInt * thatInt;  // Multiplication
@@ -93,20 +67,19 @@ a = thisInt / thatInt;  // Division
 a = thisInt ** thatInt; // Exponentiation
 a = thisInt % thatInt;  // Remainder (modulo)
 
-// Logical operators:
+
 var b: bool, thisBool = false, thatBool = true;
 b = thisBool && thatBool; // Logical and
 b = thisBool || thatBool; // Logical or
 b = !thisBool;            // Logical negation
 
-// Relational operators:
+
 b = thisInt > thatInt;           // Greater-than
 b = thisInt >= thatInt;          // Greater-than-or-equal-to
 b = thisInt < a && a <= thatInt; // Less-than, and, less-than-or-equal-to
 b = thisInt != thatInt;          // Not-equal-to
 b = thisInt == thatInt;          // Equal-to
 
-// Bitwise operators:
 a = thisInt << 10;     // Left-bit-shift by 10 bits;
 a = thatInt >> 5;      // Right-bit-shift by 5 bits;
 a = ~thisInt;          // Bitwise-negation
@@ -118,45 +91,30 @@ a *= thatInt;          // Times-equals (a = a * thatInt;)
 b &&= thatBool;        // Logical-and-equals (b = b && thatBool;)
 a <<= 3;               // Left-bit-shift-equals (a = a << 10;)
 
-// Unlike other C family languages, there are no
-// pre/post-increment/decrement operators, such as:
-//
-// ++j, --j, j++, j--
 
-// Swap operator:
 var old_this = thisInt;
 var old_that = thatInt;
 thisInt <=> thatInt; // Swap the values of thisInt and thatInt
 writeln((old_this == thatInt) && (old_that == thisInt));
 
-// Operator overloads can also be defined, as we'll see with procedures.
 
-// Tuples
 
-// Tuples can be of the same type or different types.
 var sameTup: 2*int = (10, -1);
 var sameTup2 = (11, -6);
 var diffTup: (int,real,complex) = (5, 1.928, myCplx);
 var diffTupe2 = (7, 5.64, 6.0+1.5i);
 
-// Tuples can be accessed using square brackets or parentheses, and are
-// 1-indexed.
+
 writeln("(", sameTup[1], ",", sameTup(2), ")");
 writeln(diffTup);
 
-// Tuples can also be written into.
 diffTup(1) = -1;
 
-// Tuple values can be expanded into their own variables.
 var (tupInt, tupReal, tupCplx) = diffTup;
 writeln(diffTup == (tupInt, tupReal, tupCplx));
 
-// They are also useful for writing a list of variables, as is common in debugging.
 writeln((a,b,thisInt,thatInt,thisBool,thatBool));
 
-// Control Flow
-
-// if - then - else works just like any other C-family language.
 if 10 < 100 then
   writeln("All is well");
 
@@ -165,7 +123,6 @@ if -1 < 1 then
 else
   writeln("Send mathematician, something is wrong");
 
-// You can use parentheses if you prefer.
 if (10 > 100) {
   writeln("Universe broken. Please reboot universe.");
 }
@@ -184,11 +141,8 @@ if a % 3 == 0 {
   writeln(b, " is divided by 3 with a remainder of 2.");
 }
 
-// Ternary: if - then - else in a statement.
 var maximum = if thisInt < thatInt then thatInt else thisInt;
 
-// select statements are much like switch statements in other languages.
-// However, select statements do not cascade like in C or Java.
 var inputOption = "anOption";
 select inputOption {
   when "anOption" do writeln("Chose 'anOption'");
